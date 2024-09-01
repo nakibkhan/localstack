@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  localstack:
+    image: localstack/localstack:latest
+    container_name: localstack
+    ports:
+      - "4566:4566"  # Main edge service port
+      - "4571:4571"  # Custom service port (optional, if needed)
+    environment:
+      - SERVICES=s3,sqs,dynamodb,lambda # Add other services as needed
+      - DEBUG=1
+      - DATA_DIR=/tmp/localstack/data
+      - LAMBDA_EXECUTOR=docker-reuse
+    volumes:
+      - "./localstack:/tmp/localstack" # Persist data locally
+      - "/var/run/docker.sock:/var/run/docker.sock" # Needed for Lambda to work properly
+
+# Optional network configuration, if you want to run it on a custom network
+networks:
+  default:
+    name: localstack-network
