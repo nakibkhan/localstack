@@ -1,2 +1,4 @@
 /localstack
 .idea/
+/volume/*
+1

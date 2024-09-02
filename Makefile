@@ -4,7 +4,7 @@ COMPOSE_FILE=docker-compose.yml
 # Default target: Starts the Docker Compose services
 .PHONY: up
 up:
-	docker-compose -f $(COMPOSE_FILE) up -d
+	docker-compose -f $(COMPOSE_FILE) up
 
 # Stops the Docker Compose services
 .PHONY: down
@@ -34,3 +34,13 @@ clean:
 .PHONY: ps
 ps:
 	docker-compose -f $(COMPOSE_FILE) ps
+
+# Remove all containers
+.PHONY: rm-containers
+rm-containers:
+	sudo docker rm -f $(sudo docker ps -a -q)
+
+# Remove all images
+.PHONY: rm-images
+rm-images:
+	sudo docker rmi -f $(sudo docker images -a -q)
